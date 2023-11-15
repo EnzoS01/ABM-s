@@ -10,24 +10,24 @@ import { DeleteButton } from "../DeleteButton/DeleteButton";
 
 const ArticuloInsumoTable = () => {
   
-    const [articulosInsumo, setArticulosInsumos] = useState<ArticuloInsumo[]>([]);
+    const [articulosInsu, setArticulosInsu] = useState<ArticuloInsumo[]>([]);
 
     const [isLoading, setIsLoading] = useState(true);
 
     const [refreshData, setRefreshData] = useState(false);
 
     useEffect(() => {
-        const fetchArticulosInsumo =async () => {
-            const articulosInsumo = await ArticuloInsumoService.getArticulosInsumo();
-            setArticulosInsumos(articulosInsumo);
+        const fetchArticulosInsu =async () => {
+            const articulosInsu = await ArticuloInsumoService.getArticulosInsumo();
+            setArticulosInsu(articulosInsu);
             setIsLoading(false);
         };
-        fetchArticulosInsumo();
+        fetchArticulosInsu();
     },[refreshData]);
 
-    console.log(JSON.stringify(articulosInsumo, null, 2));
+    console.log(JSON.stringify(articulosInsu, null, 2));
 
-    const intializeNewInsumo = (): ArticuloInsumo => {
+    const initializableNewInsumo = (): ArticuloInsumo => {
         return {
             id: 0,
             denominacion: "",
@@ -38,16 +38,16 @@ const ArticuloInsumoTable = () => {
         };
     };
 
-    const [articuloInsumo, setArticuloInsumos] = useState<ArticuloInsumo>(intializeNewInsumo);
+    const [art, setArt] = useState<ArticuloInsumo>(initializableNewInsumo);
 
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
     const [denominacion, setDenominacion] = useState("");
 
-    const handleClick = (newDenominacion: string, artInsumo: ArticuloInsumo, modal: ModalType) => {
+    const handleClick = (newDenominacion: string, art: ArticuloInsumo, modal: ModalType) => {
         setDenominacion(newDenominacion);
         setModalType(modal);
-        setArticuloInsumos(artInsumo);
+        setArt(art);
         setShowModal(true);
     };
 
@@ -55,10 +55,10 @@ const ArticuloInsumoTable = () => {
 
     return (
         <>
-        <Button onClick={() => handleClick("Nuevo Insumo", intializeNewInsumo(), ModalType.CREATE)}>
+        <Button onClick={() => handleClick("Nuevo Insumo", initializableNewInsumo(), ModalType.CREATE)}>
             Nuevo Insumo
         </Button>
-        {isLoading ? ( <Loader/> ) : (
+        {isLoading ?  <Loader/>  : (
             <Table hover>
                 <thead>
                     <tr>
@@ -72,15 +72,15 @@ const ArticuloInsumoTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {articulosInsumo.map(articuloInsumo => (
-                        <tr key={articuloInsumo.id}>
-                            <td>{articuloInsumo.denominacion}</td>
-                            <td>{articuloInsumo.precioCompra}</td>
-                            <td>{articuloInsumo.stockActual}</td>
-                            <td>{articuloInsumo.stockMinimo}</td>
-                            <td><img src={articuloInsumo.urlImagen} alt={articuloInsumo.denominacion} style={{width: '50px'}}/></td>
-                            <td><EditButton onClick={() => handleClick("Editar Insumo", articuloInsumo, ModalType.UPDATE)}/></td>
-                            <td><DeleteButton onClick={() => handleClick("Borrar Insumo", articuloInsumo, ModalType.DELETE)}/></td>
+                    {articulosInsu.map(art => (
+                        <tr key={art.id}>
+                            <td>{art.denominacion}</td>
+                            <td>{art.precioCompra}</td>
+                            <td>{art.stockActual}</td>
+                            <td>{art.stockMinimo}</td>
+                            <td><img src={art.urlImagen} alt={art.denominacion} style={{width: '50px'}}/></td>
+                            <td><EditButton onClick={() => handleClick("Editar Insumo", art, ModalType.UPDATE)}/></td>
+                            <td><DeleteButton onClick={() => handleClick("Borrar Insumo", art, ModalType.DELETE)}/></td>
                         </tr>
                     ))}
                 </tbody>
@@ -93,7 +93,7 @@ const ArticuloInsumoTable = () => {
             onHide={() => setShowModal(false)}
             denominacion={denominacion}
             modalType={modalType}
-            artInsumo={articuloInsumo}
+            art={art}
             refreshData={setRefreshData}
             />
         )}

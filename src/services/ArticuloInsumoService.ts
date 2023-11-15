@@ -1,6 +1,6 @@
 import { ArticuloInsumo } from "../types/ArticuloInsumo";
 
-const BASE_URL = 'https://abm-articulomanufacturado.onrender.com'
+const BASE_URL = 'http://localhost:8080/h2-console'
 
 export const ArticuloInsumoService = {
 
@@ -16,25 +16,25 @@ export const ArticuloInsumoService = {
                 return data;
     },
 
-    createArticuloInsumo: async (articuloInsumo : ArticuloInsumo): Promise<ArticuloInsumo> => {
+    createArticuloInsumo: async (art : ArticuloInsumo): Promise<ArticuloInsumo> => {
         const response = await fetch(`${BASE_URL}/api/v1/ArticulosInsumo`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(articuloInsumo)
+            body: JSON.stringify(art)
         });
         const data = await response.json();
         return data;
     },
 
-    updateArticuloInsumo: async (id: number, articuloInsumo: ArticuloInsumo): Promise<ArticuloInsumo> => {
+    updateArticuloInsumo: async (id: number, art: ArticuloInsumo): Promise<ArticuloInsumo> => {
         const response = await fetch(`${BASE_URL}/api/v1/ArticulosInsumo/${id}`, {
                     method: "PUT",
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(articuloInsumo)
+                    body: JSON.stringify(art)
                 });
                 const data = await response.json();
                 return data;

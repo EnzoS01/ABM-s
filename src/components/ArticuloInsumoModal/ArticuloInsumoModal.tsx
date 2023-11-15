@@ -12,19 +12,19 @@ type ArticuloInsumoModalProps = {
     onHide: () => void;
     denominacion: string;
     modalType: ModalType;
-    artInsumo: ArticuloInsumo;
+    art: ArticuloInsumo;
     refreshData: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ArticuloInsumoModal = ({show, onHide, denominacion, modalType, artInsumo, refreshData}: ArticuloInsumoModalProps) => {
+const ArticuloInsumoModal = ({show, onHide, denominacion, modalType, art, refreshData}: ArticuloInsumoModalProps) => {
     
-    const handleSaveUpdate =async (artIns:ArticuloInsumo) => {
+    const handleSaveUpdate =async (ins:ArticuloInsumo) => {
         try {
-            const isNew = artIns.id === 0;
+            const isNew = ins.id === 0;
             if (isNew) {
-                await ArticuloInsumoService.createArticuloInsumo(artIns);
+                await ArticuloInsumoService.createArticuloInsumo(ins);
             } else {
-                await ArticuloInsumoService.updateArticuloInsumo(artIns.id, artIns);
+                await ArticuloInsumoService.updateArticuloInsumo(ins.id, ins);
             }
             toast.success(isNew ? "Insumo creado":"Insumo actualizado", {
                 position: "top-center",
@@ -39,7 +39,7 @@ const ArticuloInsumoModal = ({show, onHide, denominacion, modalType, artInsumo, 
 
     const handleDelete = async () => {
         try {
-            await ArticuloInsumoService.deleteArticuloInsumo(artInsumo.id);
+            await ArticuloInsumoService.deleteArticuloInsumo(art.id);
             toast.success("Insumo Borrado", {
                 position: "top-center",
               });
@@ -55,15 +55,15 @@ const ArticuloInsumoModal = ({show, onHide, denominacion, modalType, artInsumo, 
         return Yup.object().shape({
             id: Yup.number().integer().min(0),
             denominacion: Yup.string().required("La denominacion es requerida"),
-            precioCompra: Yup.number().min(0).required("El precio es requerido"),
-            stockActual: Yup.number().min(0).required("El Stock Actual es requerido"),
-            stockMinimo: Yup.number().min(0).required("El Stock Minimo es requerido"),
+            precioCompra: Yup.number().integer().min(0).required("El precio es requerido"),
+            stockActual: Yup.number().integer().min(0).required("El Stock Actual es requerido"),
+            stockMinimo: Yup.number().integer().min(0).required("El Stock Minimo es requerido"),
             urlImagen: Yup.string().required("La imagen es requerida"),
         });
     };
 
     const formik = useFormik({
-        initialValues: artInsumo,
+        initialValues: art,
         validationSchema: validationSchema(),
         validateOnChange: true,
         validateOnBlur: true,
@@ -79,7 +79,7 @@ const ArticuloInsumoModal = ({show, onHide, denominacion, modalType, artInsumo, 
                         <Modal.Title>{denominacion}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>¿Está seguro que desea eliminar el Insumo?<br/> <strong>{artInsumo.denominacion}</strong>?</p>
+                        <p>¿Está seguro que desea eliminar el Insumo?<br/> <strong>{art.denominacion}</strong>?</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={onHide}>
@@ -99,7 +99,6 @@ const ArticuloInsumoModal = ({show, onHide, denominacion, modalType, artInsumo, 
                     </Modal.Header>
 
                     <Modal.Body>
-                        {"Formulario"}
                         <Form onSubmit={formik.handleSubmit}>
 
                             <Form.Group controlId="formDenominacion">
