@@ -44,7 +44,7 @@ const ArticuloManufacturadoTable = () => {
             tiempoEstimadoCocina: 0,
             precioVenta: 0,
             costo: 0,
-            image:"",
+            urlImagen:"",
         };
     };
 
@@ -91,8 +91,7 @@ const ArticuloManufacturadoTable = () => {
                             <td>{art.tiempoEstimadoCocina}</td>
                             <td>{art.precioVenta}</td>
                             <td>{art.costo}</td>
-                            <td><img src={art.image} alt={art.denominacion} 
-                            style={{width:'50px'}}/></td>
+                            <td><img src={art.urlImagen} alt={art.denominacion} style={{width:'50px'}}/></td>
                             <td> <EditButton onClick={()=> handleClick("Editar Producto",art , ModalType.UPDATE)}/> </td>
                             <td> <DeleteButton onClick={()=> handleClick("Borrar Producto",art , ModalType.DELETE)}/> </td>
                         </tr>

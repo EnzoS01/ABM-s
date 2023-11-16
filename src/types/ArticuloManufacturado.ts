@@ -5,7 +5,7 @@ export interface ArticuloManufacturado{
     tiempoEstimadoCocina: number;
     precioVenta: number;
     costo: number;
-    image: string;
+    urlImagen: string;
 
 }
 

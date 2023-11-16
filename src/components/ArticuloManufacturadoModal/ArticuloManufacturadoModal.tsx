@@ -69,7 +69,7 @@ const ArticuloManufacturadoModal = ({show, onHide, denominacion, modalType, art,
             tiempoEstimadoCocina: Yup.number().integer().min(0).required('El tiempo estimado de cocina es requerido'),
             precioVenta: Yup.number().min(0).required('El precio de venta es requerido'),
             costo: Yup.number().min(0).required('El costo es requerido'),
-            image: Yup.string().required('La URL de la imagen es requerida'),
+            urlImagen: Yup.string().required('La URL de la imagen es requerida'),
         });
     };
 
@@ -201,21 +201,22 @@ const ArticuloManufacturadoModal = ({show, onHide, denominacion, modalType, art,
                         </Form.Group>
                     
                         {/*"Imagen"*/}                
+
                         <Form.Group controlId="formImagen">
                             <Form.Label>Imagen</Form.Label>
-                            <Form.Control
-                                name="image"
-                                type="text"
-                                value={formik.values.image || ''}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                isInvalid={Boolean(formik.errors.image &&
-                                formik.touched.image)}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {formik.errors.image}
-                             </Form.Control.Feedback>
-                        </Form.Group>
+                                <Form.Control
+                                    name="urlImagen"
+                                    type="text"
+                                    value={formik.values.urlImagen || ""}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    isInvalid={Boolean(
+                                    formik.errors.urlImagen && formik.touched.urlImagen)}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {formik.errors.urlImagen}
+                                </Form.Control.Feedback>
+                            </Form.Group>
 
                             <Modal.Footer className="mt-4">
                                 
